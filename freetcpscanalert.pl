@@ -8,7 +8,7 @@
 #find it at http://www.hackinglinuxexposed.com/articles/20030730.html .
 #Many thanks, Bri.
 #
-#Version 1.
+#Version 2.
 #20/11/2020.
 #
 #
@@ -341,6 +341,20 @@ if ( ( $myscandatacount ne "" ) && ( $mylinecount > 9 ) && ( $domail == 1 ) && (
 
 
 # -------------- ADD SOME CODE TO MAIL OUT ALERT OR OTHER
+
+# Set mail recipient(s)
+	$mailout="someone\\\@somedomain.com";
+
+        $sendmail = "/bin/mail -s \"TCP Scan detected on  $addr\" $mailout";
+        open(SENDMAIL, "|$sendmail") or die "Cannot open $sendmail: $!";
+        print SENDMAIL "Incoming TCP Scan detected in progress\n";
+        print SENDMAIL "The recorded incident(s):\n\n";
+        print SENDMAIL "$myscandatacount\n\n";
+        print SENDMAIL "Alert trigger data:\n $myscandata\n\n";
+        print SENDMAIL "LOGGED ON HOST: $addr\n";
+        print SENDMAIL "Date & Timezone: $now\n";
+        close(SENDMAIL);
+
 
 
 
